@@ -1,0 +1,8 @@
+llm-config.json
+node_modules/
+cloudflared.exe
+server.log
+*.log
+.joycode/
+.DS_Store
+Thumbs.db

@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: studysage
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: LLM_MODE
+        value: remote
+      - key: LLM_BASE_URL
+        value: https://api.longcat.chat/openai
+      - key: LLM_MODEL
+        value: LongCat-2.5
+      - key: LLM_API_KEY
+        sync: false  # 在 Render Dashboard 中手动填写，不写入代码仓库
+      - key: LLM_TEMPERATURE
+        value: "0.4"
+      - key: LLM_TIMEOUT
+        value: "30000"

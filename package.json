@@ -1,0 +1,16 @@
+{
+  "name": "studysage",
+  "version": "1.0.0",
+  "private": true,
+  "description": "思齐 StudySage · AI 学习辅助智能体（学生端 + 教师端，离线规则引擎）",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "serve": "python3 -m http.server 8090"
+  },
+  "keywords": ["教育", "苏格拉底", "费曼", "掌握度", "错题归因", "学情看板"],
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  }
+}
