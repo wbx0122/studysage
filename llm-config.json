@@ -1,0 +1,9 @@
+{
+  "mode": "remote",
+  "baseURL": "https://api.longcat.chat/openai",
+  "apiKey": "ak_2th8ci8iq6ya3lq8jf22s3XL1aq32",
+  "model": "LongCat-2.5",
+  "temperature": 0.4,
+  "timeout": 30000,
+  "hasApiKey": false
+}

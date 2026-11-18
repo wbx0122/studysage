@@ -95,7 +95,11 @@ export const llmAdapter = {
   async initFromServer() {
     try {
       const resp = await fetch('/api/llm-config');
-      if (!resp.ok) { serverProxy = false; return; }
+      if (!resp.ok) {
+        // 无服务端 API（GitHub Pages 等静态部署），尝试加载静态配置文件
+        await this.initFromStaticConfig();
+        return;
+      }
       const sc = await resp.json();
       serverProxy = true;
       // 服务端配置覆盖本地（apiKey 保留本地值作为直连兜底）
@@ -103,8 +107,22 @@ export const llmAdapter = {
       config = { ...config, ...sc };
       if (!config.apiKey && localKey) config.apiKey = localKey;
     } catch {
-      serverProxy = false; // file:// 直开或无服务端
+      // file:// 直开或无服务端，尝试静态配置
+      await this.initFromStaticConfig();
     }
+  },
+
+  /** 静态部署回退：从 llm-config.json 加载预置配置（浏览器直连 LLM API） */
+  async initFromStaticConfig() {
+    serverProxy = false;
+    try {
+      const resp = await fetch('llm-config.json');
+      if (!resp.ok) return;
+      const sc = await resp.json();
+      // 优先级：用户 localStorage 设置 > 静态配置文件 > 默认值
+      const saved = JSON.parse(localStorage.getItem(CONFIG_KEY) || '{}');
+      config = { ...DEFAULT_CONFIG, ...sc, ...saved };
+    } catch { /* 静态配置不存在，使用 localStorage / 默认值 */ }
   },
 
   /** 注册本地规则实现与对应的远程 prompt 构建器 */
